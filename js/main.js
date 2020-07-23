@@ -26,7 +26,10 @@ function connectDomEvents() {
 
 function connectEvents() {
     evManager.on('game_setted', ({board, bestScore}) => {
-        document.querySelector('.best-score span').innerText = `${bestScore.score} - by ${bestScore.by}`;
+        if (bestScore) {
+            document.querySelector('.best-score').hidden = false;
+            document.querySelector('.best-score span').innerText = `${bestScore.score} - by ${bestScore.by}`;
+        } else document.querySelector('.best-score').hidden = true;
         document.querySelector('.board-container').innerHTML = '';
         tableService = new TableService('.board-container', board, getCellHTML);
         tableService.render();
