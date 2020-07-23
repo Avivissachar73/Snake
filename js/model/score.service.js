@@ -11,6 +11,7 @@ export default {
 }
 
 function checkIfNewBestScore(score) {
+    if (!score) return false;
     var prevScore = loadScore();
     if (!prevScore || prevScore.score < score) return true;
     return false;
