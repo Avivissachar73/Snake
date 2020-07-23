@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/CSS/main.css">
+    <title>Snake</title>
+</head>
+<body>
+
+    <header class="app-header flex-center">
+        <h1>SNAKE</h1>
+    </header>
+
+    <main class="app-main column-layout container">
+        <div class="info flex align-center space-around wrap width-all">
+            <h5 class="score">Score: <span>0</span></h5>
+            <h5 class="best-score">Best: <span>0</span></h5>
+            <button class="restart-btn">Restart</button>
+        </div>
+        <div class="board-container"></div>
+    </main>
+
+    <footer class="app-footer flex-center">
+        <h6>Aviv Issachar</h6>
+    </footer>
+
+
+    <script type="module" src="js/model/index.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

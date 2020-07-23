@@ -1,0 +1,35 @@
+/* BASE */
+@import './base.css';
+@import './helpers.css';
+@import './layout.css';
+
+
+.board-container {
+    width: 400px;
+} @media (max-width: 500px) {
+    .board-container {
+        width: 90%;
+    }  
+}
+
+
+.info >* {
+    margin: 5px;
+}
+
+table {
+    border-spacing: 0;
+}
+
+.wall {
+    background-color: rgb(240, 199, 150);
+}
+.floor {
+    background-color: rgb(207, 243, 171);
+}
+.player {
+    background-color: rgb(247, 65, 65);
+}
+.food {
+    background-color: rgb(145, 151, 236);
+}
