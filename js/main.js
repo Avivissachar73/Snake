@@ -12,15 +12,19 @@ import setBtnControlsCmp from './cmps/btn-controls.cmp.js';
 
 connectDomEvents();
 
-function init() {
+function init(isStart) {
     connectEvents();
-    evManager.emit('set_game');
+    evManager.emit('set_game', isStart);
 }
 
 function connectDomEvents() {
-    document.body.onload = init;
+    document.body.onload = async () => {
+        init(false);
+        await Alert('Play Snake!');
+        evManager.emit('resurme_game');
+    }
     document.body.onkeydown = handleKey;
-    document.querySelector('.restart-btn').onclick = init;
+    document.querySelector('.restart-btn').onclick = () => evManager.emit('set_game', true);
     document.querySelector('.pause-btn').onclick = pauseGame;
     setBtnControlsCmp(handleKey, null, 'main');
 }
@@ -46,7 +50,7 @@ function connectEvents() {
             if (playerName) evManager.emit('save_new_score', playerName);
         }
         var isReplay = await Confirm(`Play again?`);
-        if (isReplay) {evManager.emit('set_game');}
+        if (isReplay) {evManager.emit('set_game', true);}
     });
     evManager.on('score_update', score => {
         document.querySelector('.score span').innerText = score;

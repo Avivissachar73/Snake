@@ -25,13 +25,13 @@ function setState() {
     }
 }
 
-evManager.on('set_game', () => {
+evManager.on('set_game', (isToStart) => {
     if (gState) pauseGame();
     gState = setState();
     window.gState = gState;
     evManager.emit('game_setted', {board:gState.board, bestScore: gState.bestScore});
     evManager.emit('score_update', 0);
-    startGame();
+    if (isToStart) startGame();
 });
 evManager.on('pause_game', () => {
     pauseGame();
