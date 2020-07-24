@@ -21,6 +21,7 @@ function connectDomEvents() {
     document.body.onload = init;
     document.body.onkeydown = handleKey;
     document.querySelector('.restart-btn').onclick = init;
+    document.querySelector('.pause-btn').onclick = pauseGame;
     setBtnControlsCmp(handleKey, null, 'main');
 }
 
