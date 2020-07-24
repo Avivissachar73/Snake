@@ -6,6 +6,7 @@
 
 .board-container {
     width: 400px;
+    margin-bottom: 10px;
 } @media (max-width: 500px) {
     .board-container {
         width: 90%;
