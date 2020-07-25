@@ -54,6 +54,10 @@ function connectEvents() {
     });
     evManager.on('score_update', score => {
         document.querySelector('.score span').innerText = score;
+    });
+    evManager.on('game_paused', async () => {
+        await Alert('Game paused');
+        evManager.emit('resurme_game');
     })
 }
 
@@ -71,8 +75,6 @@ function handleKey(ev) {
 
 async function pauseGame() {
     evManager.emit('pause_game');
-    await Alert('Game paused');
-    evManager.emit('resurme_game');
 }
 
 

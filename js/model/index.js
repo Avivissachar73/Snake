@@ -21,7 +21,9 @@ function setState() {
         directionToSet: 'RIGHT',
         foodInterval: null,
         score: 0,
-        bestScore: scoreService.loadScore()
+        bestScore: scoreService.loadScore(),
+        isOn: false,
+        // isPaused: false
     }
 }
 
@@ -34,7 +36,7 @@ evManager.on('set_game', (isToStart) => {
     if (isToStart) startGame();
 });
 evManager.on('pause_game', () => {
-    pauseGame();
+    pauseGame(true);
 });
 evManager.on('resurme_game', startGame);
 evManager.on('change_direction', direction => {
@@ -45,6 +47,7 @@ evManager.on('save_new_score', byPlayerName => {
 });
 
 function startGame() {
+    if (!gState || gState.isOn) return;
     gState.playerInterval = setInterval(() => {
         var direction = gState.directionToSet;
         if (!(direction === 'UP' && gState.moveDirection === 'DOWN') &&
@@ -53,23 +56,26 @@ function startGame() {
             !(direction === 'LEFT' && gState.moveDirection === 'RIGHT')) {
                 gState.moveDirection = direction;
             }
-        // var res = playerService.movePlayer(gState);
-        // if (res === 'GAME_OVER') endGame(false);
         try{playerService.movePlayer(gState);}
         catch(e){endGame();}
     }, 100);
     gState.foodInterval = setInterval(spreadFood, 5000);
     spreadFood();
+    gState.isOn = true;
 }
-function pauseGame() {
+function pauseGame(isToEmit) {
+    if (!gState || !gState.isOn) return;
     clearInterval(gState.playerInterval);
     clearInterval(gState.foodInterval);
+    gState.isOn = false;
+    if (isToEmit) evManager.emit('game_paused');
 }
 
 function endGame() {
     pauseGame();
     var isNewScore = scoreService.checkIfNewBestScore(gState.score);
     evManager.emit('game_over', gState.score, isNewScore);
+    gState.isOn = false;
 }
 
 function spreadFood() {
