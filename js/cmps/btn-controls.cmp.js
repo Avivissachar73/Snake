@@ -100,8 +100,8 @@ function _getDefaultStyle() {
                     background-color: rgba(0, 0, 0, 0.2);
                     border: unset;
                     box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.5);
-                    height: 50px;
-                    width: 50px;
+                    height: 60px;
+                    width: 60px;
                     border-radius: 50%;
                     font-size: 20px;
                     user-select: none;
@@ -111,8 +111,8 @@ function _getDefaultStyle() {
                 }
                 .mobile-controllers .arrow-btns {
                     display: grid;
-                    grid-template-rows: repeat(3, 40px);
-                    grid-template-columns: repeat(3, 40px);
+                    grid-template-rows: repeat(3, 60px);
+                    grid-template-columns: repeat(3, 60px);
                     column-gap: 25px;
                 }
                 .mobile-controllers .arrow-btns >* {
