@@ -94,7 +94,7 @@ function spreadFood() {
     var pos = empties[idx];
 
     var food = {type: 'FOOD', score: 1};
-    if (Math.random() > 0.8) {
+    if (Math.random() > 0.9) {
         food = {
             type: 'FOOD',
             subtype: 'SUPER',
@@ -106,7 +106,7 @@ function spreadFood() {
                 gState.superModeTimeout = setTimeout(() => {
                     gState.isSuperMode = false;
                     evManager.emit('supermode_off');
-                }, 5000);
+                }, 8000);
             }
         }
     }
