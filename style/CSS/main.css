@@ -24,6 +24,9 @@ table {
 
 .wall {
     background-color: rgb(240, 199, 150);
+} 
+.supermode .wall {
+    animation: supermode-animation 2s infinite;
 }
 .floor {
     background-color: rgb(207, 243, 171);
@@ -33,4 +36,17 @@ table {
 }
 .food {
     background-color: rgb(145, 151, 236);
+}
+.food-super {
+    background-color: rgb(145, 151, 236);
+    animation: supermode-animation 2s infinite;
+}
+
+@keyframes supermode-animation {
+    50% {
+        opacity: 0.1;
+    }
+    100% {
+        opacity: 1;
+    }
 }

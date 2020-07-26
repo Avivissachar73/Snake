@@ -23,6 +23,8 @@ function setState() {
         score: 0,
         bestScore: scoreService.loadScore(),
         isOn: false,
+        isSuperMode: false,
+        superModeTimeout: null,
         // isPaused: false
     }
 }
@@ -90,7 +92,25 @@ function spreadFood() {
     if (!empties.length) return;
     var idx = getRandomInt(0, empties.length-1);
     var pos = empties[idx];
+
     var food = {type: 'FOOD', score: 1};
+    if (Math.random() > 0.8) {
+        food = {
+            type: 'FOOD',
+            subtype: 'SUPER',
+            score: 10,
+            operation: () => {
+                if (gState.superModeTimeout) clearTimeout(gState.superModeTimeout);
+                gState.isSuperMode = true;
+                evManager.emit('supermode_on');
+                gState.superModeTimeout = setTimeout(() => {
+                    gState.isSuperMode = false;
+                    evManager.emit('supermode_off');
+                }, 5000);
+            }
+        }
+    }
+    
     board[pos.i][pos.j] = food;
     evManager.emit('cell_updated', pos, food);
 }

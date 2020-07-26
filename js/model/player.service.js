@@ -29,10 +29,7 @@ function movePlayer(state) {
     var firstPart = playerParts[0];
     var lastPart = playerParts[playerParts.length-1];
     var beforelast = playerParts[playerParts.length-2];
-    var targetPos = {
-        i: firstPart.pos.i + moveDiff.i,
-        j: firstPart.pos.j + moveDiff.j
-    }
+    var targetPos = getTargetPos(firstPart.pos, moveDiff, state);
     var targetCell = board[targetPos.i][targetPos.j];
     if (targetCell.type === 'WALL' || targetCell.type === 'PLAYER') {
         throw new Error('invalid move');
@@ -45,6 +42,7 @@ function movePlayer(state) {
         board[targetPos.i][targetPos.j] = newPart;
         state.score += targetCell.score;
         evManager.emit('score_update', state.score);
+        if (targetCell.operation) targetCell.operation();
     }
     var LastPrevPos = lastPart.pos;
     lastPart.faceDirection = state.moveDirection;
@@ -80,4 +78,21 @@ function createPlayerPart(part = 'BODY', faceDirection = 'RIGHT', pos) {
         faceDirection, 
         pos
     }
+}
+
+function getTargetPos(pos, moveDiff, state) {
+    var i = pos.i + moveDiff.i;
+    var j = pos.j + moveDiff.j;
+    if (state.isSuperMode) {
+        let board = state.board;
+        let isOnI = moveDiff.i !== 0;
+        if (isOnI) {
+            if (i === 0) i = board.length-2;
+            else if (i === board.length-1) i = 1;
+        } else {
+            if (j === 0) j = board[0].length-2;
+            else if (j === board[0].length-1) j = 1;
+        }
+    }
+    return {i, j};
 }

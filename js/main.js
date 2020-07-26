@@ -58,7 +58,13 @@ function connectEvents() {
     evManager.on('game_paused', async () => {
         await Alert('Game paused');
         evManager.emit('resurme_game');
-    })
+    });
+    evManager.on('supermode_on', () => {
+        document.querySelector('.board-container').classList.add('supermode');
+    });
+    evManager.on('supermode_off', () => {
+        document.querySelector('.board-container').classList.remove('supermode');
+    });
 }
 
 function handleKey(ev) {
@@ -89,6 +95,7 @@ function getCellHTML(pos, item) {
         return 0;
     })();
     var className = item.type.toLowerCase();
+    if (item.subtype) className += `-${item.subtype.toLowerCase()}`;
     return `<div class="${className} flex-center" style="transform:rotate(${direction}deg);height:100%;width:100%;">
                 ${content}
             </div>`;
